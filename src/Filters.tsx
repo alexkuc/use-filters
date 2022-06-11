@@ -2,6 +2,14 @@ import { includes, uniq } from 'lodash';
 import { makeAutoObservable } from 'mobx';
 import { Item } from './Item';
 
+export type FilterType = 'language' | 'level';
+
+export type Filter<T> = T extends 'language'
+  ? FilterScalar
+  : T extends 'level'
+  ? FilterArray
+  : never;
+
 export interface FilterInterface {
   key: string;
   value: any;

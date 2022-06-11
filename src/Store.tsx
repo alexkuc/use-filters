@@ -1,6 +1,6 @@
 import { has } from 'lodash';
 import { makeAutoObservable } from 'mobx';
-import { FilterInterface } from './Filters';
+import { FilterInterface, FilterType, Filter } from './Filters';
 import { Item } from './Item';
 
 interface StoreInterface {
@@ -11,7 +11,7 @@ interface StoreInterface {
   resetFilters(): void;
 }
 
-class Store implements StoreInterface {
+export class Store implements StoreInterface {
   protected _data: Array<Item>;
   protected _filters: {
     [key: string]: FilterInterface;
@@ -33,8 +33,8 @@ class Store implements StoreInterface {
     this._filters = {};
   }
 
-  getFilter(key: string): FilterInterface {
-    return this._filters[key];
+  getFilter<T extends FilterType>(key: T): Filter<T> {
+    return this._filters[key] as Filter<T>;
   }
 
   hasFilter(key: string): boolean {
@@ -54,5 +54,3 @@ class Store implements StoreInterface {
     this._filters = {};
   }
 }
-
-export { Store };
