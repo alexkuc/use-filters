@@ -27,6 +27,10 @@ class FilterScalar implements FilterInterface {
     this.value = value || '';
     this.cb = cb;
   }
+
+  setValue(val: string): void {
+    this.value = val;
+  }
 }
 
 export { FilterScalar };

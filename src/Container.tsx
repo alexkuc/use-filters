@@ -19,19 +19,26 @@ const Container = observer((props: ContainerProps) => {
     language: '',
   });
 
-  useEffect(
-    () =>
-      props.store.addFilter(
-        new FilterArray({
-          key: 'level',
-          cb: function (item) {
-            if (isEmpty(this.value)) return true;
-            return includes(this.value, item.level);
-          },
-        })
-      ),
-    []
-  );
+  useEffect(() => {
+    props.store.addFilter(
+      new FilterArray({
+        key: 'level',
+        cb: function (item) {
+          if (isEmpty(this.value)) return true;
+          return includes(this.value, item.level);
+        },
+      })
+    );
+    props.store.addFilter(
+      new FilterScalar({
+        key: 'language',
+        cb: function (item) {
+          if (isEmpty(this.value)) return true;
+          return item.language === this.value;
+        },
+      })
+    );
+  }, []);
 
   return (
     <div className="container">
@@ -40,15 +47,14 @@ const Container = observer((props: ContainerProps) => {
           <button
             key={lang}
             className={`filter ${
-              filters.language === lang ? 'filter--active' : ''
+              props.store.getFilter('language')?.value === lang
+                ? 'filter--active'
+                : ''
             }`}
             value={lang}
             onClick={action(() => {
-              props.store.addFilter({
-                key: 'language',
-                value: lang,
-                cb: (item) => item.language === lang,
-              });
+              const f = props.store.getFilter('language') as FilterScalar;
+              f.setValue(lang);
             })}
           >
             {lang}
@@ -62,9 +68,9 @@ const Container = observer((props: ContainerProps) => {
             type="checkbox"
             key={level}
             value={level}
+            checked={props.store.getFilter('level')?.hasValue(level) ?? false}
             onChange={action((e) => {
               const c = e.currentTarget.checked;
-
               const f = props.store.getFilter('level') as FilterArray;
 
               if (c) f.addValue(level);
