@@ -2,7 +2,8 @@ import { action } from 'mobx';
 import { observer } from 'mobx-react-lite';
 import { includes, isEmpty } from 'lodash';
 import { useEffect, useState } from 'react';
-import { FilterArray, FilterScalar, Store } from './Store';
+import { Store } from './Store';
+import { FilterArray, FilterScalar } from './Filters';
 
 import './style.scss';
 import 'normalize.css';
