@@ -1,25 +1,83 @@
-import { has } from 'lodash';
-import { makeAutoObservable, toJS } from 'mobx';
+import { has, includes, uniq } from 'lodash';
+import { makeAutoObservable, observable } from 'mobx';
 import { Item } from './Item';
 
-interface Filter {
+interface FilterInterface {
   key: string;
   value: any;
   cb: (item: Item) => boolean;
 }
 
+class FilterScalar implements FilterInterface {
+  key: string;
+  value: string;
+  cb: (item: Item) => boolean;
+
+  constructor({
+    key,
+    value,
+    cb,
+  }: {
+    key: string;
+    value?: string;
+    cb: (item: Item) => boolean;
+  }) {
+    makeAutoObservable(this);
+    this.key = key;
+    this.value = value || '';
+    this.cb = cb;
+  }
+}
+
+export { FilterScalar };
+
+class FilterArray implements FilterInterface {
+  key: string;
+  value: Array<string>;
+  cb: (item: Item) => boolean;
+
+  constructor({
+    key,
+    value,
+    cb,
+  }: {
+    key: string;
+    value?: Array<string>;
+    cb: (item: Item) => boolean;
+  }) {
+    makeAutoObservable(this);
+    this.key = key;
+    this.value = value || observable([]);
+    this.cb = cb;
+  }
+
+  hasValue(val: string): boolean {
+    return includes(this.value, val);
+  }
+
+  addValue(val: string): void {
+    this.value = uniq([...this.value, val]);
+  }
+
+  removeValue(val: string): void {
+    this.value = this.value.filter((i) => i !== val);
+  }
+}
+
+export { FilterArray };
+
 interface StoreInterface {
-  addFilter(filter: Filter): void;
+  addFilter(filter: FilterInterface): void;
   hasFilter(key: string): boolean;
   removeFilter(key: string): void;
-  getFilter(key: string): Filter | null;
+  getFilter(key: string): FilterInterface | null;
   resetFilters(): void;
 }
 
 class Store implements StoreInterface {
   protected _data: Array<Item>;
   protected _filters: {
-    [key: string]: Filter;
+    [key: string]: FilterInterface;
   };
 
   public get data(): Array<Item> {
@@ -38,9 +96,8 @@ class Store implements StoreInterface {
     this._filters = {};
   }
 
-  getFilter(key: string): Filter | null {
-    if (!this.hasFilter(key)) return null;
-    return toJS(this._filters[key]);
+  getFilter(key: string): FilterInterface {
+    return this._filters[key];
   }
 
   hasFilter(key: string): boolean {
@@ -51,7 +108,8 @@ class Store implements StoreInterface {
     if (this.hasFilter(key)) delete this._filters[key];
   }
 
-  addFilter(filter: Filter): void {
+  addFilter(filter: FilterInterface): void {
+    filter.value = filter.value;
     this._filters[filter.key] = filter;
   }
 

@@ -1,10 +1,11 @@
 import { action } from 'mobx';
 import { observer } from 'mobx-react-lite';
-import { Store } from './Store';
-import 'normalize.css';
+import { includes, isEmpty } from 'lodash';
+import { useEffect, useState } from 'react';
+import { FilterArray, FilterScalar, Store } from './Store';
+
 import './style.scss';
-import { useState } from 'react';
-import { includes } from 'lodash';
+import 'normalize.css';
 
 interface ContainerProps {
   store: Store;
@@ -18,6 +19,20 @@ const Container = observer((props: ContainerProps) => {
     language: '',
   });
 
+  useEffect(
+    () =>
+      props.store.addFilter(
+        new FilterArray({
+          key: 'level',
+          cb: function (item) {
+            if (isEmpty(this.value)) return true;
+            return includes(this.value, item.level);
+          },
+        })
+      ),
+    []
+  );
+
   return (
     <div className="container">
       {props.languages &&
@@ -29,9 +44,6 @@ const Container = observer((props: ContainerProps) => {
             }`}
             value={lang}
             onClick={action(() => {
-              setFilters((prevState) => {
-                return { ...prevState, language: lang };
-              });
               props.store.addFilter({
                 key: 'language',
                 value: lang,
@@ -43,33 +55,24 @@ const Container = observer((props: ContainerProps) => {
           </button>
         ))}
       <br />
-      {props.levels &&
-        props.levels.map((level) => (
-          <label key={level}>
-            {level}
-            <input
-              type="checkbox"
-              key={level}
-              value={level}
-              checked={includes(props.store.getFilter('level')?.value, level)}
-              onChange={action((e) => {
-                const c = e.currentTarget.checked;
-                let v: Array<string> =
-                  props.store.getFilter('level')?.value ?? [];
-                if (c && !includes(v, level)) v.push(level);
-                if (!c) v = v.filter((i) => i !== level);
-                if (v.length !== 0) {
-                  props.store.addFilter({
-                    key: 'level',
-                    value: v,
-                    cb: (item) => includes(v, item.level),
-                  });
-                }
-                if (v.length === 0) props.store.removeFilter('level');
-              })}
-            />
-          </label>
-        ))}
+      {props.levels.map((level) => (
+        <label key={level}>
+          {level}
+          <input
+            type="checkbox"
+            key={level}
+            value={level}
+            onChange={action((e) => {
+              const c = e.currentTarget.checked;
+
+              const f = props.store.getFilter('level') as FilterArray;
+
+              if (c) f.addValue(level);
+              if (!c) f.removeValue(level);
+            })}
+          />
+        </label>
+      ))}
       <br />
       <button
         onClick={action(() => {
