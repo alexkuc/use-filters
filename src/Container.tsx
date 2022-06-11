@@ -28,7 +28,7 @@ const Container = observer((props: ContainerProps) => {
       new FilterScalar({
         key: 'language',
         apply: function (item) {
-          if (isEmpty(this.value)) return true;
+          if (this.value?.length === 0) return true;
           return item.language === this.value;
         },
       })
