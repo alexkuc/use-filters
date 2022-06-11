@@ -21,7 +21,7 @@ export class Store implements StoreInterface {
     return this._data.filter((item) => {
       for (const k in this._filters) {
         const filter = this._filters[k];
-        if (!filter.cb(item)) return false;
+        if (!filter.apply(item)) return false;
       }
       return true;
     });
@@ -51,6 +51,8 @@ export class Store implements StoreInterface {
   }
 
   resetFilters(): void {
-    this._filters = {};
+    for (const [k, v] of Object.entries(this._filters)) {
+      v.reset();
+    }
   }
 }

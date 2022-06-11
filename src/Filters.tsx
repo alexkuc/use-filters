@@ -1,4 +1,4 @@
-import { includes, uniq } from 'lodash';
+import { includes, isArray, uniq } from 'lodash';
 import { makeAutoObservable } from 'mobx';
 import { Item } from './Item';
 
@@ -13,52 +13,57 @@ export type Filter<T> = T extends 'language'
 export interface FilterInterface {
   key: string;
   value: any;
-  cb: (item: Item) => boolean;
+  apply: (item: Item) => boolean;
+  reset(): void;
 }
 
 export class FilterScalar implements FilterInterface {
-  key: string;
-  value: string;
-  cb: (item: Item) => boolean;
+  public key: string;
+  public value: string;
+  apply: (item: Item) => boolean;
 
   constructor({
     key,
     value,
-    cb,
+    apply: apply,
   }: {
     key: string;
     value?: string;
-    cb: (item: Item) => boolean;
+    apply: (item: Item) => boolean;
   }) {
     makeAutoObservable(this);
     this.key = key;
     this.value = value || '';
-    this.cb = cb;
+    this.apply = apply;
   }
 
-  setValue(val: string): void {
-    this.value = val;
+  reset(): void {
+    this.value = '';
   }
 }
 
 export class FilterArray implements FilterInterface {
-  key: string;
-  value: Array<string>;
-  cb: (item: Item) => boolean;
+  public key: string;
+  public value: Array<string>;
+  apply: (item: Item) => boolean;
 
   constructor({
     key,
     value,
-    cb,
+    apply: apply,
   }: {
     key: string;
     value?: Array<string>;
-    cb: (item: Item) => boolean;
+    apply: (item: Item) => boolean;
   }) {
     makeAutoObservable(this);
     this.key = key;
     this.value = value || [];
-    this.cb = cb;
+    this.apply = apply;
+  }
+
+  reset(): void {
+    this.value = [];
   }
 
   hasValue(val: string): boolean {

@@ -1,10 +1,9 @@
 import { action } from 'mobx';
 import { observer } from 'mobx-react-lite';
 import { includes, isEmpty } from 'lodash';
-import { useEffect, useState } from 'react';
+import { useEffect } from 'react';
 import { Store } from './Store';
 import { FilterArray, FilterScalar } from './Filters';
-
 import './style.scss';
 import 'normalize.css';
 
@@ -15,16 +14,11 @@ interface ContainerProps {
 }
 
 const Container = observer((props: ContainerProps) => {
-  const [filters, setFilters] = useState({
-    level: '',
-    language: '',
-  });
-
   useEffect(() => {
     props.store.addFilter(
       new FilterArray({
         key: 'level',
-        cb: function (item) {
+        apply: function (item) {
           if (isEmpty(this.value)) return true;
           return includes(this.value, item.level);
         },
@@ -33,7 +27,7 @@ const Container = observer((props: ContainerProps) => {
     props.store.addFilter(
       new FilterScalar({
         key: 'language',
-        cb: function (item) {
+        apply: function (item) {
           if (isEmpty(this.value)) return true;
           return item.language === this.value;
         },
@@ -55,7 +49,7 @@ const Container = observer((props: ContainerProps) => {
             value={lang}
             onClick={action(() => {
               const f = props.store.getFilter('language') as FilterScalar;
-              f.setValue(lang);
+              f.value = lang;
             })}
           >
             {lang}
@@ -81,15 +75,7 @@ const Container = observer((props: ContainerProps) => {
         </label>
       ))}
       <br />
-      <button
-        onClick={action(() => {
-          setFilters({
-            language: '',
-            level: '',
-          });
-          props.store.resetFilters();
-        })}
-      >
+      <button onClick={action(() => props.store.resetFilters())}>
         Remove all filters
       </button>
       {props.store && props.store.data.map((item) => item.render())}
