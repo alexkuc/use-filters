@@ -4,6 +4,7 @@ import { Store } from './Store';
 import 'normalize.css';
 import './style.scss';
 import { useState } from 'react';
+import { includes } from 'lodash';
 
 interface ContainerProps {
   store: Store;
@@ -31,10 +32,11 @@ const Container = observer((props: ContainerProps) => {
               setFilters((prevState) => {
                 return { ...prevState, language: lang };
               });
-              props.store.addFilter(
-                'language',
-                (item) => item.language === lang
-              );
+              props.store.addFilter({
+                key: 'language',
+                value: lang,
+                cb: (item) => item.language === lang,
+              });
             })}
           >
             {lang}
@@ -43,21 +45,30 @@ const Container = observer((props: ContainerProps) => {
       <br />
       {props.levels &&
         props.levels.map((level) => (
-          <button
-            key={level}
-            className={`filter ${
-              filters.level === level ? 'filter--active' : ''
-            }`}
-            value={level}
-            onClick={action(() => {
-              setFilters((prevState) => {
-                return { ...prevState, level: level };
-              });
-              props.store.addFilter('level', (item) => item.level === level);
-            })}
-          >
+          <label key={level}>
             {level}
-          </button>
+            <input
+              type="checkbox"
+              key={level}
+              value={level}
+              checked={includes(props.store.getFilter('level')?.value, level)}
+              onChange={action((e) => {
+                const c = e.currentTarget.checked;
+                let v: Array<string> =
+                  props.store.getFilter('level')?.value ?? [];
+                if (c && !includes(v, level)) v.push(level);
+                if (!c) v = v.filter((i) => i !== level);
+                if (v.length !== 0) {
+                  props.store.addFilter({
+                    key: 'level',
+                    value: v,
+                    cb: (item) => includes(v, item.level),
+                  });
+                }
+                if (v.length === 0) props.store.removeFilter('level');
+              })}
+            />
+          </label>
         ))}
       <br />
       <button
