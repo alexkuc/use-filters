@@ -16,18 +16,18 @@ interface ContainerProps {
 const Container = observer((props: ContainerProps) => {
   useEffect(() => {
     props.store.addFilter(
-      new FilterArray({
+      new FilterByArr({
         key: 'level',
-        apply: function (item) {
+        apply: function (item): boolean {
           if (isEmpty(this.value)) return true;
           return includes(this.value, item.level);
         },
       })
     );
     props.store.addFilter(
-      new FilterScalar({
+      new FilterByVal({
         key: 'language',
-        apply: function (item) {
+        apply: function (item): boolean {
           if (this.value?.length === 0) return true;
           return item.language === this.value;
         },
@@ -48,7 +48,7 @@ const Container = observer((props: ContainerProps) => {
             }`}
             value={lang}
             onClick={action(() => {
-              const f = props.store.getFilter('language') as FilterScalar;
+              const f = props.store.getFilter('language');
               f.value = lang;
             })}
           >

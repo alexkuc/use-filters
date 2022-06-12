@@ -3,24 +3,25 @@ import { makeAutoObservable } from 'mobx';
 import { Item } from './Item';
 
 export type FilterType = 'language' | 'level';
+type ApplyType = (item: Item) => boolean;
+
 
 export type Filter<T> = T extends 'language'
-  ? FilterScalar
+  ? FilterByVal
   : T extends 'level'
-  ? FilterArray
+  ? FilterByArr
   : never;
 
 export interface FilterInterface {
   key: string;
-  value: any;
-  apply: (item: Item) => boolean;
+  apply: ApplyType;
   reset(): void;
 }
 
-export class FilterScalar implements FilterInterface {
+export class FilterByVal implements FilterInterface {
   public key: string;
-  public value: string;
-  apply: (item: Item) => boolean;
+  public value: any;
+  public apply: ApplyType;
 
   constructor({
     key,
@@ -28,8 +29,8 @@ export class FilterScalar implements FilterInterface {
     apply: apply,
   }: {
     key: string;
-    value?: string;
-    apply: (item: Item) => boolean;
+    value?: any;
+    apply: ApplyType;
   }) {
     makeAutoObservable(this);
     this.key = key;
@@ -42,10 +43,10 @@ export class FilterScalar implements FilterInterface {
   }
 }
 
-export class FilterArray implements FilterInterface {
+export class FilterByArr implements FilterInterface {
   public key: string;
-  public value: Array<string>;
-  apply: (item: Item) => boolean;
+  protected value: Array<any>;
+  public apply: ApplyType;
 
   constructor({
     key,
@@ -53,8 +54,8 @@ export class FilterArray implements FilterInterface {
     apply: apply,
   }: {
     key: string;
-    value?: Array<string>;
-    apply: (item: Item) => boolean;
+    value?: Array<any>;
+    apply: ApplyType;
   }) {
     makeAutoObservable(this);
     this.key = key;
@@ -66,7 +67,7 @@ export class FilterArray implements FilterInterface {
     this.value = [];
   }
 
-  hasValue(val: string): boolean {
+  hasValue(val: any): boolean {
     return includes(this.value, val);
   }
 
