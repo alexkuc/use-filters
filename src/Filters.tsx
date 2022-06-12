@@ -16,26 +16,31 @@ export type Filter<T> = T extends 'language'
 
 export interface FilterInterface {
   key: string;
+  label?: string;
   apply: ApplyType;
   reset(): void;
 }
 
 export class FilterByVal implements FilterInterface {
   public key: string;
+  public label: string;
   public value: any;
   public apply: ApplyType;
 
   constructor({
     key,
+    label,
     value,
     apply: apply,
   }: {
     key: string;
+    label?: string;
     value?: any;
     apply: ApplyType;
   }) {
     makeAutoObservable(this);
     this.key = key;
+    this.label = label || '';
     this.value = value || '';
     this.apply = apply;
   }
