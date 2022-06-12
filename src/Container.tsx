@@ -56,24 +56,25 @@ const Container = observer((props: ContainerProps) => {
           </button>
         ))}
       <br />
-      {props.levels.map((level) => (
-        <label key={level}>
-          {level}
-          <input
-            type="checkbox"
-            key={level}
-            value={level}
-            checked={props.store.getFilter('level')?.hasValue(level) ?? false}
-            onChange={action((e) => {
-              const c = e.currentTarget.checked;
-              const f = props.store.getFilter('level') as FilterArray;
+      {props.levels &&
+        props.levels.map((level) => (
+          <label key={level}>
+            {level}
+            <input
+              type="checkbox"
+              key={level}
+              value={level}
+              checked={props.store.getFilter('level')?.hasValue(level) ?? false}
+              onChange={action((e) => {
+                const c = e.currentTarget.checked;
+                const f = props.store.getFilter('level');
 
-              if (c) f.addValue(level);
-              if (!c) f.removeValue(level);
-            })}
-          />
-        </label>
-      ))}
+                if (c) f.addValue(level);
+                if (!c) f.removeValue(level);
+              })}
+            />
+          </label>
+        ))}
       <br />
       <button onClick={action(() => props.store.resetFilters())}>
         Remove all filters
