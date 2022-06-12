@@ -79,7 +79,21 @@ const Container = observer((props: ContainerProps) => {
       <button onClick={action(() => props.store.resetFilters())}>
         Remove all filters
       </button>
-      {props.store && props.store.data.map((item) => item.render())}
+      {props.store &&
+        props.store.data.map((item) => (
+          <div key={item.id} className="item">
+            <ul>
+              <li>{item.title}</li>
+              <li>{item.language}</li>
+              <li>{item.level}</li>
+              <li>
+                {dayjs(item.starTime).format('D MMM, ddd, HH:MM:ss')}
+                {', '}
+                {dayjs.tz.guess()}
+              </li>
+            </ul>
+          </div>
+        ))}
     </div>
   );
 });

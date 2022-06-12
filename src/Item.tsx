@@ -32,18 +32,6 @@ class Item {
     this.language = language;
     this.level = level;
   }
-
-  render() {
-    return (
-      <div key={this.id} className="item">
-        <ul>
-          <li>{this.title}</li>
-          <li>{this.language}</li>
-          <li>{this.level}</li>
-        </ul>
-      </div>
-    );
-  }
 }
 
 export { Item };
