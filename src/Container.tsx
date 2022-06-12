@@ -2,6 +2,7 @@ import { action } from 'mobx';
 import { Store } from './Store';
 import { observer } from 'mobx-react-lite';
 import { FilterInterface } from './Filters';
+import { makeNestedFilter } from './factory';
 
 import './style.scss';
 import 'normalize.css';
@@ -80,9 +81,14 @@ const Container = observer((props: ContainerProps) => {
           </label>
         ))}
       <br />
+      <button onClick={action(() => props.store.addFilter(makeNestedFilter()))}>
+        Test deeply nested filters
+      </button>
+      <br />
       <button onClick={action(() => props.store.resetFilters())}>
         Remove all filters
       </button>
+      <br />
       {props.store &&
         props.store.data.map((item) => (
           <div key={item.id} className="item">

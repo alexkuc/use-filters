@@ -4,13 +4,19 @@ import { Item } from './Item';
 
 type ApplyType = (item: Item) => boolean;
 
-export type FilterType = 'language' | 'level' | 'time';
+export type FilterType = 'language' | 'level' | 'time' | 'L1' | 'L2' | 'L3';
 
 export type Filter<T> = T extends 'language'
   ? FilterByVal
   : T extends 'level'
   ? FilterByArr
   : T extends 'time'
+  ? FilterByMap
+  : T extends 'L1'
+  ? FilterByMap
+  : T extends 'L2'
+  ? FilterByMap
+  : T extends 'L3'
   ? FilterByMap
   : never;
 
@@ -91,6 +97,7 @@ interface FilterCollectionInterface extends FilterInterface {
   add(filter: FilterInterface): void;
   remove(filter: FilterInterface): boolean;
   has(filter: FilterInterface): boolean;
+  get(key: any): FilterInterface | undefined;
 }
 
 // ugly but I don't know how to make it better...
@@ -115,6 +122,7 @@ export class FilterByMap implements FilterCollectionInterface {
     apply: ApplyType;
   }) {
     makeAutoObservable(this);
+
     this.key = key;
     this.value = value || new Map();
     this.apply = apply;
@@ -129,24 +137,6 @@ export class FilterByMap implements FilterCollectionInterface {
       this.forEach((filter) => arr.push(filter));
       return arr;
     };
-
-    // return native JS object when using .forEach()
-    this.value.forEach = function (
-      callback: (
-        value: FilterInterface,
-        key: string,
-        map: Map<any, FilterInterface>
-      ) => void,
-      thisArg?: any
-    ): void {
-      if (typeof callback !== 'function') {
-        throw new TypeError(callback + ' is not a function');
-      }
-      thisArg = thisArg || this;
-      for (const [k, v] of this.entries()) {
-        callback.call(thisArg, toJS(v), k, this);
-      }
-    };
   }
 
   add(filter: FilterInterface): void {
@@ -159,6 +149,10 @@ export class FilterByMap implements FilterCollectionInterface {
 
   has(filter: FilterInterface): boolean {
     return this.value.get(filter.key) !== undefined;
+  }
+
+  get(key: any): FilterInterface | undefined {
+    return this.value.get(key);
   }
 
   reset(): void {
