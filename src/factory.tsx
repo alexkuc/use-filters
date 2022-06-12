@@ -7,7 +7,7 @@ const makeItem = ({ language, level }: { language: string; level: string }) => {
     title: faker.lorem.sentence(),
     description: faker.lorem.lines(),
     instructor: faker.name.findName(),
-    startTime: new Date(),
+    startTime: faker.date.soon(90),
     language: language,
     level: level,
   });
