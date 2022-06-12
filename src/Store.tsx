@@ -46,7 +46,6 @@ export class Store implements StoreInterface {
   }
 
   addFilter(filter: FilterInterface): void {
-    filter.value = filter.value;
     this._filters[filter.key] = filter;
   }
 
