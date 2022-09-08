@@ -47,7 +47,7 @@ const useFilters = <DataValue, FilterMap extends FilterMapType<DataValue>>({
       });
     }
 
-    return []; // catch-all value
+    return data; // if invalid key is supplied, just return data as-is
   };
 
   // https://stackoverflow.com/a/54165564
