@@ -55,7 +55,7 @@ const useFilters = <DataValue, FilterMap extends FilterMapType<DataValue>>({
   const getFilter = <K extends keyof FilterMap>(
     key: K
   ): FilterMap[K] | undefined => {
-    return paramFilters[key];
+    return filters[key];
   };
 
   return {
