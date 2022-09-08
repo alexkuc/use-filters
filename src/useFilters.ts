@@ -1,3 +1,4 @@
+import { isEmpty } from 'lodash';
 import { useState } from 'react';
 
 export type Filter<DataValue> = {
@@ -27,6 +28,9 @@ const useFilters = <DataValue, FilterMap extends FilterMapType<DataValue>>({
   const [filters, setFilters] = useState(paramFilters);
 
   const getData = (logic: 'OR' | 'AND' = 'OR'): DataValue[] => {
+    // if we are missing filters, skip filtering altogether
+    if (isEmpty(filters)) return data;
+
     if (logic === 'OR') {
       return data.filter((item) => {
         return Object.values(filters).some((filter) => {
