@@ -10,21 +10,14 @@
     "coverage": "jest --coverage=true --maxWorkers=1"
   },
   "dependencies": {
-    "@faker-js/faker": "^7.2.0",
-    "@types/lodash-es": "^4.17.6",
-    "dayjs": "^1.11.3",
     "lodash": "^4.17.21",
-    "lodash-es": "^4.17.21",
-    "mobx": "^6.6.0",
-    "mobx-react-lite": "^3.4.0",
-    "normalize.css": "^8.0.1",
-    "react": "^18.0.0",
-    "react-dom": "^18.0.0",
-    "sass": "^1.52.3"
+    "react": "^18.2.0",
+    "react-dom": "^18.2.0"
   },
   "devDependencies": {
     "@testing-library/react": "^13.4.0",
     "@types/jest": "^29.0.0",
+    "@types/lodash": "^4.14.184",
     "@types/node": "^18.7.14",
     "@types/react": "^18.0.0",
     "@types/react-dom": "^18.0.0",
