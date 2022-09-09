@@ -6,10 +6,10 @@ const makeFilter = <DataValue>(
 ): Filter<DataValue> => {
   return {
     checkData,
-    removeFilter() {},
-    addFilter() {},
-    setFilter() {},
-    resetFilter() {},
+    removeValue() {},
+    addValue() {},
+    setValues() {},
+    resetValues() {},
   };
 };
 

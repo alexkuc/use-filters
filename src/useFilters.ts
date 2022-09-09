@@ -3,10 +3,10 @@ import { useState } from 'react';
 
 export type Filter<DataValue> = {
   checkData: (item: DataValue) => boolean;
-  removeFilter: (value: any) => void;
-  addFilter: (value: any) => void;
-  setFilter: (value: any | any[]) => void;
-  resetFilter: () => void;
+  removeValue: (value: any) => void;
+  addValue: (value: any) => void;
+  setValues: (value: any | any[]) => void;
+  resetValues: () => void;
 };
 
 type FilterMapType<DataValue> = {
