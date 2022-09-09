@@ -1,0 +1,22 @@
+@mixin class($class) {
+  .page-complex #{$class} {
+    @content;
+  }
+}
+
+@include class('.button') {
+  margin-bottom: 0.5rem;
+}
+
+@include class('.buttons__header') {
+  font-weight: 700;
+  margin-bottom: 0.25rem;
+}
+
+@include class('.filter--active') {
+  color: red;
+}
+
+@include class('th') {
+  text-align: left;
+}
