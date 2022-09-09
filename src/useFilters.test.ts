@@ -15,36 +15,6 @@ const makeFilter = <DataValue>(
 
 const makeSimpleFilter = () => makeFilter(() => true);
 
-const nestedObjects = [
-  {
-    levelOneProp: 1,
-    nestedProp: {
-      levelTwoProp: '!',
-      nestedProp: {
-        levelThreeProp: 'abc',
-      },
-    },
-  },
-  {
-    levelOneProp: 2,
-    nestedProp: {
-      levelTwoProp: '$',
-      nestedProp: {
-        levelThreeProp: 'def',
-      },
-    },
-  },
-  {
-    levelOneProp: 3,
-    nestedProp: {
-      levelTwoProp: '*',
-      nestedProp: {
-        levelThreeProp: 'ghi',
-      },
-    },
-  },
-];
-
 test("getData('OR') without filters", () => {
   const data = [1, 2, 3, 4, 5];
   const filters = {};
@@ -241,11 +211,4 @@ test('setFilters()', () => {
   );
 
   expect(result.current.getFilter('filter')).toStrictEqual(filter);
-});
-
-test('nested filters', () => {
-  const data = nestedObjects;
-  const filters = {
-    levelOne: makeFilter<typeof data>((obj) => true),
-  };
 });
