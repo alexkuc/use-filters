@@ -1,0 +1,12 @@
+@mixin class($class) {
+  .object-page #{$class} {
+    @content;
+  }
+}
+
+@include class('.buttons__container') {
+}
+
+@include class('.button') {
+  margin-bottom: 0.5rem;
+}
