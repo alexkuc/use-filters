@@ -50,8 +50,12 @@ const useFilters = <DataValue, FilterMap extends FilterMapType<DataValue>>({
     return data; // if invalid key is supplied, just return data as-is
   };
 
-  // https://stackoverflow.com/a/54165564
-  // https://stackoverflow.com/a/71788339
+  /**
+   * @deprecated since filters state is exposed, this is redundant
+   *
+   * {@link https://stackoverflow.com/a/54165564}
+   * {@link https://stackoverflow.com/a/71788339}
+   */
   const getFilter = <K extends keyof FilterMap>(
     key: K
   ): FilterMap[K] | undefined => {
@@ -61,6 +65,7 @@ const useFilters = <DataValue, FilterMap extends FilterMapType<DataValue>>({
   return {
     getData,
     setData,
+    filters,
     getFilter,
     setFilters,
   };
