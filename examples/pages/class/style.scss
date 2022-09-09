@@ -1,0 +1,17 @@
+@mixin class($class) {
+  .class-page #{$class} {
+    @content;
+  }
+}
+
+@include class('.filter__values') {
+  margin: 1rem;
+}
+
+@include class('.buttons') {
+  margin: 1rem;
+}
+
+@include class('.button') {
+  margin-bottom: 0.5rem;
+}
