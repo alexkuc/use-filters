@@ -1,0 +1,18 @@
+@import 'modern-normalize/modern-normalize.css';
+
+body {
+  font-size: 10px;
+}
+
+.layout {
+  padding: 1.5rem;
+}
+
+.layout__menu {
+  margin: 1rem;
+}
+
+.layout__content {
+  margin: 1rem;
+  font-size: 1.25rem;
+}
