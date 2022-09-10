@@ -32,6 +32,7 @@
   "optionalDependencies": {
     "@faker-js/faker": "^7.5.0",
     "classnames": "^2.3.1",
+    "dayjs": "^1.11.5",
     "modern-normalize": "^1.1.0",
     "react-router-dom": "^6.3.0",
     "sass": "^1.54.9"
