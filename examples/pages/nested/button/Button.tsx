@@ -1,6 +1,6 @@
 import classNames from 'classnames';
+import { Condition, ValueFilter } from '../filter/ValueFilter';
 import './button.scss';
-import { Condition, ValueFilter } from './filter/ValueFilter';
 
 type Params = {
   children: React.ReactNode;
