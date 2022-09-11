@@ -1,0 +1,26 @@
+@mixin class($class) {
+  .page-multiple #{$class} {
+    @content;
+  }
+}
+
+@include class('.filter') {
+  display: none;
+}
+
+@include class('.cell:hover .filter') {
+  display: inline-block;
+}
+
+@include class('.filter__button') {
+  background-color: initial;
+  border: none;
+}
+
+@include class('.filter__button--add') {
+  color: green;
+}
+
+@include class('.filter__button--remove') {
+  color: red;
+}
