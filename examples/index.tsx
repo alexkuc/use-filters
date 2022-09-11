@@ -4,6 +4,7 @@ import { BrowserRouter, Route, Routes } from 'react-router-dom';
 import { Layout } from './components/layout/Layout';
 import { Class } from './pages/class/Class';
 import { Complex } from './pages/complex/Complex';
+import { Data } from './pages/data/Data';
 import { Mobx } from './pages/mobx/Mobx';
 import { Multiple } from './pages/multiple/Multiple';
 import { Nested } from './pages/nested/Nested';
@@ -25,6 +26,7 @@ document.addEventListener('DOMContentLoaded', () => {
             <Route path="class" element={<Class />} />
             <Route path="complex" element={<Complex />} />
             <Route path="multiple" element={<Multiple />} />
+            <Route path="data" element={<Data />} />
             <Route path="nested" element={<Nested />} />
             <Route path="mobx" element={<Mobx />} />
           </Route>

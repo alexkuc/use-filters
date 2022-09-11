@@ -8,6 +8,7 @@ const Menu = () => {
       <Entry to="class">Class filter</Entry>
       <Entry to="complex">Complex filter</Entry>
       <Entry to="multiple">Multiple filters</Entry>
+      <Entry to="data">Non-homogeneous data</Entry>
       <Entry to="nested">Nested filters</Entry>
       <Entry to="mobx">Filters with Mobx</Entry>
     </nav>

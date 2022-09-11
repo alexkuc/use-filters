@@ -1,0 +1,9 @@
+@mixin class($class) {
+  .page-data #{$class} {
+    @content;
+  }
+}
+
+@include class('.button--acitve') {
+  color: red;
+}
