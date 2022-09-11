@@ -9,7 +9,7 @@ class Data {
   public readonly car: string;
 
   constructor() {
-    this.id = faker.datatype.uuid();
+    this.id = faker.helpers.unique(faker.datatype.uuid);
     const color = faker.color.human();
     this.color = color[0].toUpperCase() + color.slice(1);
     this.name = faker.name.firstName();
