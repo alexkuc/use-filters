@@ -31,23 +31,24 @@ const useFilters = <DataValue, FilterMap extends FilterMapType<DataValue>>({
     // if we are missing filters, skip filtering altogether
     if (isEmpty(filters)) return data;
 
-    if (logic === 'OR') {
-      return data.filter((item) => {
-        return Object.values(filters).some((filter) => {
-          return filter.checkData(item);
-        });
-      });
-    }
+    const method = getMethod(logic);
 
-    if (logic === 'AND') {
-      return data.filter((item) => {
-        return Object.values(filters).every((filter) => {
-          return filter.checkData(item);
-        });
-      });
-    }
+    // if invalid key is supplied, just return data as-is
+    if (!method) return data;
 
-    return data; // if invalid key is supplied, just return data as-is
+    return data.filter((item) => {
+      return Object.values(filters)[method]((filter) => {
+        return filter.checkData(item);
+      });
+    });
+  };
+
+  const getMethod = (
+    str: string
+  ): keyof Pick<DataValue[], 'every' | 'some'> | null => {
+    if (str === 'OR') return 'some';
+    if (str === 'AND') return 'every';
+    return null;
   };
 
   /**
