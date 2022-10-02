@@ -1,6 +1,6 @@
 import React from 'react';
 import ReactDOM from 'react-dom/client';
-import { BrowserRouter, Route, Routes } from 'react-router-dom';
+import { HashRouter, Route, Routes } from 'react-router-dom';
 import { Layout } from './components/layout/Layout';
 import { Class } from './pages/class/Class';
 import { Complex } from './pages/complex/Complex';
@@ -15,7 +15,7 @@ document.addEventListener('DOMContentLoaded', () => {
   if (!root) return;
   const entryComponent = (
     <React.StrictMode>
-      <BrowserRouter>
+      <HashRouter>
         <Routes>
           <Route path="/" element={<Layout />}>
             <Route
@@ -31,7 +31,7 @@ document.addEventListener('DOMContentLoaded', () => {
             <Route path="mobx" element={<Mobx />} />
           </Route>
         </Routes>
-      </BrowserRouter>
+      </HashRouter>
     </React.StrictMode>
   );
   ReactDOM.createRoot(root).render(entryComponent);
