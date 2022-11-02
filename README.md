@@ -15,8 +15,30 @@ Source-specific dependencies are listed under `devDependencies`.
 Usage is pretty straight forward:
 
 ```ts
-const { getData, setData, filters, setFilters } = useFilters(data, filters);
+const { getData, setData, filters, setFilters } = useFilters({ data, filters });
 ```
+
+where `data` can be any value and `filters` is an object typeof `FilterMapType`:
+
+```ts
+type FilterMapType<DataValue> = {
+  [key: string]: Filter<DataValue>;
+  [key: number]: Filter<DataValue>;
+  [key: symbol]: Filter<DataValue>;
+};
+```
+
+```ts
+type Filter<DataValue> = {
+  checkData: (item: DataValue) => boolean;
+  removeValue: (value: any) => void;
+  addValue: (value: any) => void;
+  setValues: (value: any | any[]) => void;
+  resetValues: () => void;
+};
+```
+
+There is an extensive number of examples under `examples/pages/` directory.
 
 | Function     | Purpose                   | Notes           |
 | :----------- | :------------------------ | --------------- |
@@ -32,5 +54,3 @@ const { ... } = useFilters<DataType, FilterType>(data, {});
 ```
 
 Internal `filters` are exposed to allow running events when filters are modified, e.g. `useEffect(..., [filters])`.
-
-There is an extensive number of examples under `examples/pages/` directory.
