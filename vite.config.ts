@@ -18,7 +18,7 @@ export default ({ mode }) => {
     build: {
       lib: {
         entry: resolve(__dirname, 'src/useFilters'),
-        name: 'CoolFilters',
+        name: 'use-filters',
       },
       rollupOptions: {
         external: ['react'],
