@@ -4,6 +4,8 @@ declare global {
     interface ProcessEnv {
       VITE_HOST: string;
       VITE_PORT: string;
+      // workaround for https://github.com/vitejs/vite/issues/2967
+      VITE_MODE: string;
     }
   }
 }

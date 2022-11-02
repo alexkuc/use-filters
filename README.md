@@ -38,7 +38,7 @@ type Filter<DataValue> = {
 };
 ```
 
-There is an extensive number of examples under `examples/pages/` directory.
+You can view online examples [here](https://alexkuc.github.io/use-filters/) and their source code can be found [here](./examples/).
 
 | Function     | Purpose                   | Notes           |
 | :----------- | :------------------------ | --------------- |

@@ -28,3 +28,6 @@ dist-ssr
 
 # Jest coverage
 coverage
+
+# Docs & GitHub Pages
+docs
