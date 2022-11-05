@@ -1,6 +1,9 @@
 {
-  "name": "use-filters",
+  "name": "@alexkuc/use-filters",
   "private": false,
+  "publishConfig": {
+    "access": "public"
+  },
   "version": "1.0.0",
   "files": [
     "dist"

@@ -7,7 +7,7 @@
 You can install this directly from npm registry via
 
 ```shell
-npm i use-filters
+npm i @alexkuc/use-filters
 ```
 
 ## Dependencies
