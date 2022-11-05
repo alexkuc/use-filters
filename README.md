@@ -2,6 +2,14 @@
 
 `useFilters` is a React-based hook that allows to filter arbitary data. It is written in TypeScript to take advantage of generics. The hook is scalable as it supports nested filters and arbitary data type as well as filters. Implementation has also unit tests.
 
+## Installation
+
+You can install this directly from npm registry via
+
+```shell
+npm i use-filters
+```
+
 ## Dependencies
 
 This hook was written against React v18 but is not bundled itself.
