@@ -4,6 +4,8 @@
   "publishConfig": {
     "access": "public"
   },
+  "repository": "github:alexkuc/use-filters",
+  "homepage": "https://github.com/alexkuc/use-filters",
   "version": "1.0.0",
   "files": [
     "dist"
