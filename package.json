@@ -6,7 +6,7 @@
   },
   "repository": "github:alexkuc/use-filters",
   "homepage": "https://github.com/alexkuc/use-filters",
-  "version": "1.0.2",
+  "version": "1.0.3",
   "files": [
     "dist"
   ],
@@ -37,7 +37,7 @@
     "test": "jest --maxWorkers=1",
     "coverage": "jest --coverage=true --maxWorkers=1",
     "docs": "VITE_MODE=DOCS npm run build",
-    "publish": "npm test && npm run build && npm publish"
+    "prepublishOnly": "npm test && npm run build"
   },
   "dependencies": {
     "lodash": "^4.17.21",
